@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Weather</string>
+
+    <string name="open_weather_maps_app_id">3e3d80dd41d9da1fd540323b71f18c8a</string>
+
+    <string name="enable_permission">Enable camera, location, and storage permission</string>
+    <string name="requires_permission">The application requires permission!</string>
+    <string name="settings">Settings</string>
+    <string name="cancel">cancel</string>
+
+    <string name="internet_connected">Connection restored</string>
+    <string name="internet_not_available">No connection</string>
+</resources>

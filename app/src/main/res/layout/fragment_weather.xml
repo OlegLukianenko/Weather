@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".WeatherFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="weather.test.application.viewmodel.WeatherFragmentViewModel" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints"
+        android:background="@color/white">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/blue"
+            app:layout_constraintHeight_percent="0.6" />
+
+        <TextView
+            android:id="@+id/textViewPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:drawableStart="@drawable/ic_place"
+            android:drawablePadding="6dp"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Запорожье" />
+
+        <ImageView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/ic_my_location"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlace"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlace" />
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            setDayOfWeek="@{viewModel.dailyWeatherMutableLiveData.dt_txt}"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@android:color/white"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPlace"
+            tools:text="ПТ,20 июня" />
+
+        <ImageView
+            android:id="@+id/iconWeather"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:src="@drawable/ic_place"
+            app:layout_constraintBottom_toTopOf="@+id/recycleViewHorizontal"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_v_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_v_1"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.55" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_v_2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.38" />
+
+        <TextView
+            android:id="@+id/textViewTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.dailyWeatherMutableLiveData.main.temp + &quot;℃&quot;}"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:drawableStart="@drawable/ic_temp"
+            android:drawablePadding="6dp"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_v_1"
+            app:layout_constraintTop_toTopOf="@+id/iconWeather"
+            tools:text="27/19" />
+
+        <TextView
+            android:id="@+id/textViewHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.dailyWeatherMutableLiveData.main.humidity  + &quot;%&quot;}"
+            android:layout_marginStart="8dp"
+            android:drawableStart="@drawable/ic_humidity"
+            android:drawablePadding="6dp"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewWind"
+            app:layout_constraintStart_toStartOf="@+id/guideline_v_1"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTemp"
+            tools:text="33%" />
+
+        <TextView
+            android:id="@+id/textViewWind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.dailyWeatherMutableLiveData.wind.speed  + &quot;м/сек&quot;}"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:drawableStart="@drawable/ic_wind"
+            android:drawablePadding="6dp"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iconWeather"
+            app:layout_constraintStart_toStartOf="@+id/guideline_v_1"
+            tools:text="5м/сек" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleViewHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/blue_light"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/recycle_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline_v_2" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
