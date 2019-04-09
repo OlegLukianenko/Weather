@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#4a90E2</color>
     <color name="colorPrimaryDark">#5A9FF0</color>
-    <color name="colorAccent">#3D64D9</color>
+    <color name="colorAccent">#2BA4C2</color>
 
     <color name="blue">#4a90E2</color>
     <color name="blue_light">#5A9FF0</color>
@@ -13,4 +13,7 @@
 
     <color name="gradient_start">#2BA4C2</color>
     <color name="gradient_end">#135AA1</color>
+
+    <color name="black_transparent_2">#99000000</color>
+    <color name="white_transparent">#80FFFFFF</color>
 </resources>

@@ -9,6 +9,10 @@
             name="viewModel"
             type="weather.test.application.viewmodel.WeatherFragmentViewModel" />
 
+        <variable
+            name="handler"
+            type="weather.test.application.app.home.WeatherFragment" />
+
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -28,12 +32,16 @@
             android:id="@+id/textViewPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:onClick="@{() -> handler.changePlaceClick()}"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:drawableStart="@drawable/ic_place"
             android:drawablePadding="6dp"
             android:textColor="@android:color/white"
             android:textSize="18dp"
+            android:background="@drawable/ic_click_ripple"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Запорожье" />
@@ -53,7 +61,7 @@
             android:id="@+id/textViewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            setDayOfWeek="@{viewModel.dailyWeatherMutableLiveData.dt_txt}"
+            setDayOfWeek="@{viewModel.getDailyWeatherMutable().getDate()}"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:textColor="@android:color/white"
@@ -93,7 +101,7 @@
             android:id="@+id/textViewTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.dailyWeatherMutableLiveData.main.temp + &quot;℃&quot;}"
+            setTemp="@{viewModel.getDailyWeatherMutable().main.temp}"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:drawableStart="@drawable/ic_temp"
@@ -108,7 +116,7 @@
             android:id="@+id/textViewHumidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.dailyWeatherMutableLiveData.main.humidity  + &quot;%&quot;}"
+            android:text="@{viewModel.getDailyWeatherMutable().main.humidity == null ? &quot;0%&quot; : viewModel.getDailyWeatherMutable().main.humidity + &quot;%&quot;}"
             android:layout_marginStart="8dp"
             android:drawableStart="@drawable/ic_humidity"
             android:drawablePadding="6dp"
@@ -123,7 +131,7 @@
             android:id="@+id/textViewWind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.dailyWeatherMutableLiveData.wind.speed  + &quot;м/сек&quot;}"
+            android:text="@{viewModel.getDailyWeatherMutable().wind.speed == null ? &quot;0m/sec&quot; : viewModel.getDailyWeatherMutable().wind.speed + &quot;m/sec&quot;}"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
             android:drawableStart="@drawable/ic_wind"
@@ -153,6 +161,18 @@
             android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
+        <include
+            android:id="@+id/includeLayoutProgressBar"
+            layout="@layout/layout_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="9dp"
+            app:viewModel="@{viewModel}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

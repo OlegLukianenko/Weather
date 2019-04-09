@@ -11,19 +11,19 @@ public class SplashActivityViewModel extends ViewModel {
     @Inject
     RepositoryApi repositoryApi;
 
+    private MutableLiveData<Boolean> progressBarVisibility = new MutableLiveData<>();
+    private MutableLiveData<Boolean> internetIsAvailable = new MutableLiveData<>();
+
     @Inject
     public SplashActivityViewModel() {
     }
-
-
-    private MutableLiveData<Boolean> internetIsAvailable = new MutableLiveData<>();
 
     public MutableLiveData<Boolean> getInternetIsAvailable() {
         return internetIsAvailable;
     }
 
-    public MutableLiveData<LocationCity> getListCityFromApi() {
-        return repositoryApi.getListCityFromApi();
+    public MutableLiveData<Boolean> getProgressBarEvent() {
+        return progressBarVisibility;
     }
 
 

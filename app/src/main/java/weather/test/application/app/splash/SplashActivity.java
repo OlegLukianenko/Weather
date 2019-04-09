@@ -67,12 +67,16 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> implemen
     private BroadcastReceiver internetConnectionReceiver;
 
     @Override
-    protected void onCreate() {
+    protected void onCreate()
+    {
+        binding.setViewModel(viewModel);
+        binding.setLifecycleOwner(this);
         viewModel.getInternetIsAvailable().postValue(networkHelper.isNetworkAvailable());
         initProfileBroadcastReceiver();
         CheckInternetDialog.setMyListenerInet(this);
         viewModel.getInternetIsAvailable().observe(this, Void -> showSnackBar());
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        viewModel.getProgressBarEvent().postValue(true);
     }
 
     @Override
@@ -96,7 +100,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> implemen
     private void startMainActivity(double latitude, double longitude) {
         sharedPreferences.edit().putFloat("latitude", (float) latitude).apply();
         sharedPreferences.edit().putFloat("longitude", (float) longitude).apply();
-
+        viewModel.getProgressBarEvent().postValue(false);
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
         finish();
