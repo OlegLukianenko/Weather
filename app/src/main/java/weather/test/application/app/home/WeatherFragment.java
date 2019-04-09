@@ -1,12 +1,10 @@
 package weather.test.application.app.home;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -111,9 +109,8 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> implem
 
             linkedHashMap.put(predDay, listWeathers);
             listWeathers = new ArrayList<>();
-            for(String key: linkedHashMap.keySet())
-            {
-                listWeathers.add(linkedHashMap.get(key).get(linkedHashMap.get(key).size()/2));
+            for (String key : linkedHashMap.keySet()) {
+                listWeathers.add(linkedHashMap.get(key).get(linkedHashMap.get(key).size() / 2));
             }
 
             viewModel.getProgressBarEvent().postValue(false);
@@ -129,9 +126,6 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> implem
     @Override
     public void onWeatherItemClick(Weather.DailyWeather dailyWeather) {
         viewModel.getDailyWeatherMutable().postValue(dailyWeather);
-        String a = dailyWeather.dt_txt;
-        Log.d("", "onWeatherItemClick: ");
-
         String date = String.format("%d",
                 dailyWeather.getDate().get(Calendar.DAY_OF_WEEK));
         horizontalWeatherRecyclerAdapter.setItems(linkedHashMap.get(date));
