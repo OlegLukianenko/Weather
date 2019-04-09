@@ -19,7 +19,7 @@ public class BindingAdapters {
     public static void setDayOfWeek(TextView textView, String date) {
         String dayOfWeek = "";
         if(date!=null) {
-            switch (Integer.parseInt(date) - 1) {
+            switch (Integer.parseInt(date)) {
                 case Calendar.SUNDAY:
                     dayOfWeek = "SUNDAY";
                     break;

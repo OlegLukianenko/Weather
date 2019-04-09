@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#4a90E2</color>
     <color name="colorPrimaryDark">#5A9FF0</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#3D64D9</color>
 
     <color name="blue">#4a90E2</color>
     <color name="blue_light">#5A9FF0</color>
@@ -10,4 +10,7 @@
 
     <color name="internet_not_available">#CC323232</color>
     <color name="internet_available">#CC056f00</color>
+
+    <color name="gradient_start">#2BA4C2</color>
+    <color name="gradient_end">#135AA1</color>
 </resources>
