@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 import weather.test.application.viewmodel.WeatherFragmentViewModel;
 import weather.test.application.viewmodel.SecondActivityViewModel;
-import weather.test.application.viewmodel.SecondFragmentViewModel;
+import weather.test.application.viewmodel.PlaceFragmentViewModel;
 import weather.test.application.viewmodel.SplashActivityViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
@@ -24,7 +24,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         creators = new ArrayMap<>();
         creators.put(SplashActivityViewModel.class, component::splashActivityViewModel);
         creators.put(WeatherFragmentViewModel.class, component::firstFragmentViewModel);
-        creators.put(SecondFragmentViewModel.class, component::secondFragmentViewModel);
+        creators.put(PlaceFragmentViewModel.class, component::secondFragmentViewModel);
         creators.put(SecondActivityViewModel.class, component::secondActivityViewModel);
     }
 

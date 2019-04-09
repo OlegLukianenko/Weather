@@ -10,6 +10,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import weather.test.application.data.retrofit.RepositoryApi;
 import weather.test.application.data.retrofit.ServerApi;
+import weather.test.application.data.retrofit.response.City;
 import weather.test.application.data.retrofit.response.LocationCity;
 import weather.test.application.data.retrofit.response.Weather;
 
@@ -24,16 +25,13 @@ public class RepositoryImpl implements RepositoryApi {
     public RepositoryImpl() {
     }
 
-    final MutableLiveData<LocationCity> data = new MutableLiveData<>();
-
-
     @Override
-    public MutableLiveData<LocationCity> getListCityFromApi() {
+    public void getListCityFromApi(MutableLiveData<LocationCity> cityMutableLiveData) {
         Call<LocationCity> messages = serverApi.getListCityFromApi();
         messages.enqueue(new Callback<LocationCity>() {
             @Override
             public void onResponse(Call<LocationCity> call, Response<LocationCity> response) {
-                data.postValue(response.body());
+                cityMutableLiveData.postValue(response.body());
             }
 
             @Override
@@ -41,7 +39,6 @@ public class RepositoryImpl implements RepositoryApi {
                 Log.d(TAG, "onFailure: ");
             }
         });
-        return data;
     }
 
     @Override
