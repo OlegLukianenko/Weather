@@ -16,8 +16,9 @@ public class WeatherFragmentViewModel extends ViewModel {
     public WeatherFragmentViewModel() {
     }
 
-    final public MutableLiveData<Weather> weatherMutableLiveData = new MutableLiveData<>();
-    final public MutableLiveData<Weather.DailyWeather> dailyWeatherMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Weather> weatherMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Weather.DailyWeather> dailyWeatherMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> progressBarVisibility = new MutableLiveData<>();
 
     public void sendWeatherRequest(double latitude, double longitude) {
         repositoryApi.getWeatherFromApi(latitude, longitude, weatherMutableLiveData);
@@ -30,6 +31,10 @@ public class WeatherFragmentViewModel extends ViewModel {
 
     public MutableLiveData<Weather.DailyWeather> getDailyWeatherMutable() {
         return dailyWeatherMutableLiveData;
+    }
+
+    public MutableLiveData<Boolean> getProgressBarEvent() {
+        return progressBarVisibility;
     }
 
 }

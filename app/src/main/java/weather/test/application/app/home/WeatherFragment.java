@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -43,7 +44,7 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> implem
     @Inject
     protected SharedPreferences sharedPreferences;
 
-    Map<String, List<Weather.DailyWeather>> linkedHashMap;
+    public Map<String, List<Weather.DailyWeather>> linkedHashMap;
 
     @Override
     protected int getLayout() {
@@ -54,14 +55,20 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> implem
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setViewModel(viewModel);
+        binding.setHandler(this);
         binding.setLifecycleOwner(this);
 
         float latitude = sharedPreferences.getFloat("latitude", 0.0f);
         float longitude = sharedPreferences.getFloat("longitude", 0.0f);
         viewModel.sendWeatherRequest(latitude, longitude);
-
+        viewModel.getProgressBarEvent().postValue(true);
         initSubscribers();
         initWeatherAdapter();
+    }
+
+    public void changePlaceClick() {
+        if (getActivity() != null)
+            ((MainActivity) getActivity()).showFragment(new PlaceFragment());
     }
 
     private void initWeatherAdapter() {
@@ -87,10 +94,8 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> implem
         {
             linkedHashMap = new LinkedHashMap<>();
             List<Weather.DailyWeather> listWeathers = new ArrayList<>();
-
             String predDay = "";
 
-            List<Weather.DailyWeather> listDailyWeathers = new ArrayList<>();
             for (Weather.DailyWeather day : weatherResponseWrap.list) {
 
                 if (!predDay.isEmpty()) {
@@ -102,21 +107,21 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> implem
                     }
                 }
                 predDay = String.format("%d", day.getDate().get(Calendar.DAY_OF_WEEK));
-
-                if (day.getDate().get(Calendar.HOUR_OF_DAY) == 15) {
-                    @SuppressLint("DefaultLocale") String date = String.format("%d",
-                            day.getDate().get(Calendar.DAY_OF_WEEK),
-                            day.getDate().get(Calendar.HOUR_OF_DAY),
-                            day.getDate().get(Calendar.MINUTE)
-                    );
-                    day.dt_txt = date;
-                    listDailyWeathers.add(day);
-                }
             }
+
+            linkedHashMap.put(predDay, listWeathers);
+            listWeathers = new ArrayList<>();
+            for(String key: linkedHashMap.keySet())
+            {
+                listWeathers.add(linkedHashMap.get(key).get(linkedHashMap.get(key).size()/2));
+            }
+
+            viewModel.getProgressBarEvent().postValue(false);
             horizontalWeatherRecyclerAdapter.setItems(linkedHashMap.get(linkedHashMap.keySet().iterator().next()));
-            weatherRecyclerAdapter.setItems(listDailyWeathers);
             binding.textViewPlace.setText(weatherResponseWrap.city.name);
-            viewModel.getDailyWeatherMutable().postValue(listDailyWeathers.get(0));
+
+            weatherRecyclerAdapter.setItems(listWeathers);
+            viewModel.getDailyWeatherMutable().postValue(listWeathers.get(0));
 
         });
     }
@@ -124,6 +129,11 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> implem
     @Override
     public void onWeatherItemClick(Weather.DailyWeather dailyWeather) {
         viewModel.getDailyWeatherMutable().postValue(dailyWeather);
-        horizontalWeatherRecyclerAdapter.setItems(linkedHashMap.get(dailyWeather.dt_txt));
+        String a = dailyWeather.dt_txt;
+        Log.d("", "onWeatherItemClick: ");
+
+        String date = String.format("%d",
+                dailyWeather.getDate().get(Calendar.DAY_OF_WEEK));
+        horizontalWeatherRecyclerAdapter.setItems(linkedHashMap.get(date));
     }
 }
