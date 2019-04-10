@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +20,7 @@ import javax.inject.Inject;
 
 import weather.test.application.R;
 import weather.test.application.app.home.adapter.HorizontalWeatherRecyclerAdapter;
+import weather.test.application.app.home.adapter.MapFragment;
 import weather.test.application.app.home.adapter.WeatherRecyclerAdapter;
 import weather.test.application.base.BaseFragment;
 import weather.test.application.data.retrofit.response.Weather;
@@ -68,6 +68,11 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> implem
     public void changePlaceClick() {
         if (getActivity() != null)
             ((MainActivity) getActivity()).showFragment(new PlaceFragment());
+    }
+
+    public void openMapClick() {
+        if (getActivity() != null)
+            ((MainActivity) getActivity()).showFragment(new MapFragment());
     }
 
     private void initWeatherAdapter() {

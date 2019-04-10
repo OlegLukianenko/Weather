@@ -10,6 +10,7 @@ import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
+import weather.test.application.viewmodel.MapFragmentViewModel;
 import weather.test.application.viewmodel.WeatherFragmentViewModel;
 import weather.test.application.viewmodel.SecondActivityViewModel;
 import weather.test.application.viewmodel.PlaceFragmentViewModel;
@@ -23,9 +24,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     public ViewModelFactory(ViewModelComponent component) {
         creators = new ArrayMap<>();
         creators.put(SplashActivityViewModel.class, component::splashActivityViewModel);
-        creators.put(WeatherFragmentViewModel.class, component::firstFragmentViewModel);
-        creators.put(PlaceFragmentViewModel.class, component::secondFragmentViewModel);
+        creators.put(WeatherFragmentViewModel.class, component::weatherFragmentViewModel);
+        creators.put(PlaceFragmentViewModel.class, component::placeFragmentViewModel);
         creators.put(SecondActivityViewModel.class, component::secondActivityViewModel);
+        creators.put(MapFragmentViewModel.class, component::mapFragmentViewModel);
     }
 
     @NonNull

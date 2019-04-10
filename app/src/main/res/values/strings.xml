@@ -2,6 +2,7 @@
     <string name="app_name">Weather</string>
 
     <string name="open_weather_maps_app_id">3e3d80dd41d9da1fd540323b71f18c8a</string>
+    <string name="my_map_key">AIzaSyB6Za9dQTr5TFDULLyR_FjQKgYZ_mldUyY</string>
 
     <string name="enable_permission">Enable location permission</string>
     <string name="requires_permission">The application requires permission!</string>

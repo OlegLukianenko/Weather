@@ -1,6 +1,7 @@
 package weather.test.application.di.viewmodel;
 
 import dagger.Subcomponent;
+import weather.test.application.viewmodel.MapFragmentViewModel;
 import weather.test.application.viewmodel.WeatherFragmentViewModel;
 import weather.test.application.viewmodel.SecondActivityViewModel;
 import weather.test.application.viewmodel.PlaceFragmentViewModel;
@@ -18,7 +19,9 @@ public interface ViewModelComponent {
 
     SecondActivityViewModel secondActivityViewModel();
 
-    WeatherFragmentViewModel firstFragmentViewModel();
+    WeatherFragmentViewModel weatherFragmentViewModel();
 
-    PlaceFragmentViewModel secondFragmentViewModel();
+    PlaceFragmentViewModel placeFragmentViewModel();
+
+    MapFragmentViewModel mapFragmentViewModel();
 }

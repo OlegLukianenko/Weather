@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
 
 
     <application
@@ -16,6 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name="weather.test.application.app.App">
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/my_map_key" />
+
         <activity android:name="weather.test.application.app.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

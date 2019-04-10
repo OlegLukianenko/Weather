@@ -37,14 +37,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         return fragmentDispatchingAndroidInjector;
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            finish();
-//        }
-//        return true;
-//    }
-
 
     @Override
     public void onBackPressed() {

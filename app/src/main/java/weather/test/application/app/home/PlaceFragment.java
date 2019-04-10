@@ -73,7 +73,6 @@ public class PlaceFragment extends BaseFragment<FragmentPlaceBinding> implements
         binding.btnBack.setOnClickListener(view -> {
             KeyboardStateManager.hideSoftKeyboard(getActivity());
             getActivity().onBackPressed();
-
         });
 
     }
