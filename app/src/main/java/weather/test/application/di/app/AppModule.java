@@ -10,7 +10,6 @@ import dagger.Module;
 import dagger.Provides;
 import weather.test.application.app.App;
 import weather.test.application.di.home.mainActivity.MainActivityComponent;
-import weather.test.application.di.home.secondActivity.SecondActivityComponent;
 import weather.test.application.di.splash.SplashActivityComponent;
 import weather.test.application.di.viewmodel.ViewModelComponent;
 import weather.test.application.di.viewmodel.ViewModelFactory;
@@ -19,8 +18,7 @@ import weather.test.application.utils.NetworkHelper;
 @Module(subcomponents = {
         ViewModelComponent.class,
         SplashActivityComponent.class,
-        MainActivityComponent.class,
-        SecondActivityComponent.class})
+        MainActivityComponent.class})
 public class AppModule {
 
     @Provides

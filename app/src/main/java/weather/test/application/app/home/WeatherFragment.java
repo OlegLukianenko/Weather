@@ -20,7 +20,6 @@ import javax.inject.Inject;
 
 import weather.test.application.R;
 import weather.test.application.app.home.adapter.HorizontalWeatherRecyclerAdapter;
-import weather.test.application.app.home.adapter.MapFragment;
 import weather.test.application.app.home.adapter.WeatherRecyclerAdapter;
 import weather.test.application.base.BaseFragment;
 import weather.test.application.data.retrofit.response.Weather;

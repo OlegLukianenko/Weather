@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".app.splash.SplashActivity"
+    tools:ignore="ContentDescription">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="weather.test.application.viewmodel.MapFragmentViewModel" />
+
+        <variable
+            name="handler"
+            type="weather.test.application.app.home.MapFragment"/>
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/mapFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.example.LocationChooser">
+        </fragment>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/containerWrap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@{viewModel.getPlaceIsAvailable() ? @color/blue_transparent : @color/internet_not_available }"
+            android:clickable="@{viewModel.getPlaceIsAvailable() ? true: false }"
+            android:onClick="@{() -> handler.changePlaceClick()}"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
+                android:text="@{viewModel.getPlaceIsAvailable() ? &quot;Show weather conditions&quot;: &quot;Select city&quot; }"
+                android:textColor="@android:color/white"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>

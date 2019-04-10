@@ -12,7 +12,6 @@ import javax.inject.Inject;
 
 import weather.test.application.viewmodel.MapFragmentViewModel;
 import weather.test.application.viewmodel.WeatherFragmentViewModel;
-import weather.test.application.viewmodel.SecondActivityViewModel;
 import weather.test.application.viewmodel.PlaceFragmentViewModel;
 import weather.test.application.viewmodel.SplashActivityViewModel;
 
@@ -26,7 +25,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         creators.put(SplashActivityViewModel.class, component::splashActivityViewModel);
         creators.put(WeatherFragmentViewModel.class, component::weatherFragmentViewModel);
         creators.put(PlaceFragmentViewModel.class, component::placeFragmentViewModel);
-        creators.put(SecondActivityViewModel.class, component::secondActivityViewModel);
         creators.put(MapFragmentViewModel.class, component::mapFragmentViewModel);
     }
 

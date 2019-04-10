@@ -9,7 +9,7 @@ import dagger.android.support.FragmentKey;
 import dagger.multibindings.IntoMap;
 import weather.test.application.app.home.PlaceFragment;
 import weather.test.application.app.home.WeatherFragment;
-import weather.test.application.app.home.adapter.MapFragment;
+import weather.test.application.app.home.MapFragment;
 import weather.test.application.di.home.map.MapFragmentComponent;
 import weather.test.application.di.home.place.PlaceFragmentComponent;
 import weather.test.application.di.home.weather.WeatherFragmentComponent;
