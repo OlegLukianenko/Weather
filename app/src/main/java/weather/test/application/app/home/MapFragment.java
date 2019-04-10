@@ -4,24 +4,24 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.io.IOException;
-import java.util.List;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import javax.inject.Inject;
 
@@ -43,8 +43,9 @@ public class MapFragment extends BaseFragment<FragmentMapBinding> implements
     private GoogleMap mMap;
     private float latitude;
     private float longitude;
-    private Geocoder geocoder;
     private MarkerOptions markerOptions;
+    private FusedLocationProviderClient fusedLocationClient;
+
 
     @Override
     protected int getLayout() {
@@ -58,6 +59,7 @@ public class MapFragment extends BaseFragment<FragmentMapBinding> implements
         binding.setLifecycleOwner(this);
         binding.setHandler(this);
         viewModel.getPlaceIsAvailable().postValue(false);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.mapFragment);
         assert mapFragment != null;
@@ -79,11 +81,19 @@ public class MapFragment extends BaseFragment<FragmentMapBinding> implements
         mMap.getUiSettings().setMapToolbarEnabled(false);
 
         mMap.setOnMyLocationButtonClickListener(() -> {
-            if(mMap.getMyLocation()!=null||mMap.getMyLocation()!=null) {
-                latitude = (float) mMap.getMyLocation().getLatitude();
-                longitude = (float) mMap.getMyLocation().getLongitude();
-                viewModel.getPlaceIsAvailable().postValue(true);
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             }
+            fusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if ((location != null)) {
+                        latitude = (float) location.getLatitude();
+                        longitude = (float) location.getLongitude();
+                        viewModel.getPlaceIsAvailable().postValue(true);
+                    }
+                }
+            });
             return false;
         });
 
@@ -117,31 +127,11 @@ public class MapFragment extends BaseFragment<FragmentMapBinding> implements
 
         @Override
         protected String doInBackground(LatLng... params) {
-            Address address;
             String addressTex = "";
-
-            try {
-                geocoder = new Geocoder(mContext);
-                latitude = (float) params[0].latitude;
-                longitude = (float) params[0].longitude;
-
-                viewModel.getPlaceIsAvailable().postValue(true);
-
-                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-
-                if (addresses != null && addresses.size() > 0) {
-                    address = addresses.get(0);
-
-                    if (address.getLocality() != null)
-                        addressTex = address.getLocality() + ",  " + address.getCountryName();
-                    else
-                        addressTex = address.getCountryName();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            latitude = (float) params[0].latitude;
+            longitude = (float) params[0].longitude;
+            viewModel.getPlaceIsAvailable().postValue(true);
             return addressTex;
-
         }
 
         @Override

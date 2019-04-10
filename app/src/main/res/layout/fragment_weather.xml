@@ -55,7 +55,7 @@
             android:focusable="true"
             android:onClick="@{() -> handler.openMapClick()}"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/ic_my_location"
+            android:background="@drawable/ic_location_ripple"
             app:layout_constraintBottom_toBottomOf="@+id/textViewPlace"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textViewPlace" />
@@ -79,7 +79,6 @@
             android:layout_height="0dp"
             android:layout_marginStart="22dp"
             android:layout_marginEnd="22dp"
-            android:src="@drawable/ic_place"
             app:layout_constraintBottom_toTopOf="@+id/recycleViewHorizontal"
             app:layout_constraintDimensionRatio="4:3"
             app:layout_constraintEnd_toStartOf="@+id/guideline_v_1"

@@ -24,6 +24,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,28 +58,27 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> implemen
 
     @Inject
     protected SharedPreferences sharedPreferences;
+    private LocationManager locationManager;
+    private FusedLocationProviderClient fusedLocationClient;
+    private static final int PICK_GET_PERMISSION = 9999;
+    private boolean dialogIsOpen = true;
+    private BroadcastReceiver internetConnectionReceiver;
 
     @Override
     protected int getLayout() {
         return R.layout.activity_splash;
     }
 
-    private LocationManager locationManager;
-
-    private static final int PICK_GET_PERMISSION = 9999;
-    private boolean dialogIsOpen = true;
-    private BroadcastReceiver internetConnectionReceiver;
-
     @Override
-    protected void onCreate()
-    {
+    protected void onCreate() {
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
         viewModel.getInternetIsAvailable().postValue(networkHelper.isNetworkAvailable());
         initProfileBroadcastReceiver();
         CheckInternetDialog.setMyListenerInet(this);
         viewModel.getInternetIsAvailable().observe(this, Void -> showSnackBar());
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         viewModel.getProgressBarEvent().postValue(true);
     }
 
@@ -178,13 +181,28 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> implemen
                             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
                     .show();
         } else {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                        5000, 0, locationListener);
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                        5000, 0, locationListener);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
             }
+            fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if ((location != null)) {
+                        startMainActivity(location.getLatitude(), location.getLongitude());
+
+                    } else {
+                        if (ActivityCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                                    5000, 0, locationListener);
+                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                                    5000, 0, locationListener);
+                        }
+                    }
+                }
+            });
         }
+
     }
 
 
