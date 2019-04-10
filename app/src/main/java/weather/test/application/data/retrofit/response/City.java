@@ -6,4 +6,11 @@ public class City {
     public float lon;
     public float lat;
 
+
+
+    @Override
+    public String toString() {
+        return city;
+    }
+
 }

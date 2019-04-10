@@ -18,6 +18,7 @@ public class PlaceFragmentViewModel extends ViewModel {
     public PlaceFragmentViewModel() {
     }
 
+    private MutableLiveData<Boolean> progressBarVisibility = new MutableLiveData<>();
     private MutableLiveData<LocationCity> cityMutableLiveData = new MutableLiveData<>();
 
     public void sendCityRequest() {
@@ -26,6 +27,10 @@ public class PlaceFragmentViewModel extends ViewModel {
 
     public MutableLiveData<LocationCity> getListCityFromApi() {
         return cityMutableLiveData;
+    }
+
+    public MutableLiveData<Boolean> getProgressBarEvent() {
+        return progressBarVisibility;
     }
 
 }

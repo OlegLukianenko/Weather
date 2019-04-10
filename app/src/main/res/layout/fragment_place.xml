@@ -1,21 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="weather.test.application.viewmodel.PlaceFragmentViewModel" />
+
+
+    </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Second fragment"
+            android:background="@color/blue"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/ic_back_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="@+id/autoCompleteTextView"
+                app:layout_constraintEnd_toStartOf="@+id/autoCompleteTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/autoCompleteTextView" />
+
+
+            <ImageView
+                android:id="@+id/btnBack2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:background="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="@+id/autoCompleteTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/autoCompleteTextView" />
+
+
+            <ImageView
+                android:id="@+id/btnSearch"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ic_search_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="@+id/backgroundSearch"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/backgroundSearch"
+                app:layout_constraintWidth_percent="0.09" />
+
+            <View
+                android:id="@+id/backgroundSearch"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/bg_btn_white_border_rounded"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="70:9"
+                app:layout_constraintEnd_toStartOf="@+id/btnSearch"
+                app:layout_constraintStart_toEndOf="@+id/btnBack2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:completionThreshold="1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:elevation="3dp"
+                android:hint="Search"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/backgroundSearch"
+                app:layout_constraintEnd_toEndOf="@+id/backgroundSearch"
+                app:layout_constraintStart_toStartOf="@+id/backgroundSearch"
+                app:layout_constraintTop_toTopOf="@+id/backgroundSearch"
+                tools:text="12345" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <include
+            android:id="@+id/includeLayoutProgressBar"
+            layout="@layout/layout_search_city_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="9dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:viewModel="@{viewModel}"
+            tools:visibility="visible" />
     </android.support.constraint.ConstraintLayout>
 </layout>
